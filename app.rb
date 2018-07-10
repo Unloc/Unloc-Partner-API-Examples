@@ -8,7 +8,6 @@ $invitee = '<phone number>'
 $api_key = '<api key>'
 $hmac_secret = '<hmac secret>'
 $app_scheme = 'ai.unloc.pro://'
-$return_url = '<to be resolved>'
 
 class ApiClient
     include HTTParty
@@ -35,7 +34,7 @@ class ApiClient
 end
 
 def app_scheme_url(key_id)
-    "#{$app_scheme}use-key?id=#{key_id}&r=#{$return_url}&n=#{$partner}&s=#{$hmac_secret}"
+    "#{$app_scheme}use-key?id=#{key_id}&r=https://#{request.host}&n=#{$partner}&s=#{$hmac_secret}"
 end
 
 get '/' do
