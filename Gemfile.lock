@@ -1,0 +1,31 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
+    json (2.1.0)
+    multi_xml (0.6.0)
+    mustermann (1.0.2)
+    rack (2.0.5)
+    rack-protection (2.0.3)
+      rack
+    shotgun (0.9.2)
+      rack (>= 1.0)
+    sinatra (2.0.3)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.3)
+      tilt (~> 2.0)
+    tilt (2.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  httparty
+  json
+  shotgun
+  sinatra
+
+BUNDLED WITH
+   1.16.2
