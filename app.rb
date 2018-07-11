@@ -104,7 +104,6 @@ __END__
 <% @key_details.each do |k,v| %>
     <p><%= k %>: <%= v %></p>
 <% end %>
-<form action="<%= @open_app_url %>" target="_blank">
-    <input type="submit" value="Use key" />
-</form>
+
+<p><a href="<%= @open_app_url %>">Use key</a></p>
 <p><a href="/">Back to locks</a></p>
