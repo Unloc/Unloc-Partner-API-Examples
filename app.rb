@@ -38,8 +38,8 @@ end
 def create_key(lock_id)
     body = {
         'lockId': lock_id, 
-        'start': Time.now.utc.to_date, 
-        'end': (Time.now + 24*60*60).utc.to_date, 
+        'start': Time.now.utc, 
+        'end': (Time.now + 24*60*60).utc, 
         'msn': $invitee
     }
     
