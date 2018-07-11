@@ -33,7 +33,7 @@ def create_key(lock_id)
         'msn': $invitee
     }
     
-    HTTParty.post("#{$base_url}/partners/#{$partner}/keys", {headers: @headers, body: body}).parsed_response['id']
+    HTTParty.post("#{$base_url}/partners/#{$partner}/keys", {headers: $headers, body: body}).parsed_response['id']
 end
 
 get '/' do
@@ -46,15 +46,14 @@ get '/' do
 end
 
 get '/lock/:id' do
-    locks = ApiClient.locks
     begin
-        lock = locks.find {|lock| lock['id'] == params['id']}
+        lock = get_locks.find {|lock| lock['id'] == params['id']}
     rescue
         halt 404
     end
 
     unless lock.nil?
-        @lock_id = ApiClient.create_key(lock['id'])
+        @lock_id = create_key(lock['id'])
         @open_app_url = app_scheme_url(@lock_id)
         erb :lock_id
     else 
