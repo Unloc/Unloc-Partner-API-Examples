@@ -9,37 +9,35 @@ $api_key = '<api key>'
 $hmac_secret = '<hmac secret>'
 $app_scheme = 'ai.unloc.pro://'
 
-class ApiClient
-    include HTTParty
-
-    base_uri "https://api.unloc.app/v1"
-
-    @headers = {'Authorization': "Bearer #{$api_key}"}
-
-    def self.locks
-        self.get("/partners/#{$partner}/locks", {headers: @headers}).parsed_response['locks']
-    end
-    
-    def self.create_key(lock_id)
-        body = {
-            'lockId': lock_id, 
-            'start': Time.now.utc.to_date, 
-            'end': (Time.now + 24*60*60).utc.to_date, 
-            'msn': $invitee
-        }
-        
-        self.post("/partners/#{$partner}/keys", {headers: @headers, body: body}).parsed_response['id']
-    end
-    
-end
+$base_url = "https://api.unloc.app/v1"
+$headers = {'Authorization': "Bearer #{$api_key}"}
 
 def app_scheme_url(key_id)
     "#{$app_scheme}use-key?id=#{key_id}&r=https://#{request.host}&n=#{$partner}&s=#{$hmac_secret}"
 end
 
+def get_locks
+    HTTParty.get("#{$base_url}/partners/#{$partner}/locks", {headers: $headers}).parsed_response['locks']
+end
+
+def create_key(lock_id)
+    body = {
+        'lockId': lock_id, 
+        'start': Time.now.utc.to_date, 
+        'end': (Time.now + 24*60*60).utc.to_date, 
+        'msn': $invitee
+    }
+    
+    HTTParty.post("#{$base_url}/partners/#{$partner}/keys", {headers: @headers, body: body}).parsed_response['id']
+end
+
 get '/' do
-    @locks = ApiClient.locks
-    erb :index
+    @locks = get_locks
+    unless @locks.nil?
+        erb :index
+    else
+        halt 404
+    end
 end
 
 get '/lock/:id' do
