@@ -9,13 +9,17 @@ $api_key = '<api key>'
 $hmac_secret = '<hmac secret>'
 $app_scheme = 'ai.unloc.pro://'
 
+# Reusables for the api requests
 $base_url = "https://api.unloc.app/v1"
 $headers = {'Authorization': "Bearer #{$api_key}"}
 
+# Creates an url to be used to open the Unloc Pro app.
+# Pass a valid key ID.
 def app_scheme_url(key_id)
     "#{$app_scheme}use-key?id=#{key_id}&r=https://#{request.host}&n=#{$partner}&s=#{$hmac_secret}"
 end
 
+# Get the locks available to the configured partner
 def get_locks
     HTTParty.get("#{$base_url}/partners/#{$partner}/locks", {headers: $headers}).parsed_response['locks']
 end
