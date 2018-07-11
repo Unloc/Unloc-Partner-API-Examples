@@ -46,6 +46,11 @@ def create_key(lock_id)
     HTTParty.post("#{$base_url}/partners/#{$partner_id}/keys", {headers: $headers, body: body}).parsed_response['id']
 end
 
+# Get the key details for the provided key id
+def key_details(key_id)
+    HTTParty.get("#{$base_url}/partners/#{$partner_id}/keys/#{key_id}", {headers: $headers}).parsed_response
+end
+
 get '/' do
     @locks = get_locks
     unless @locks.nil?
@@ -64,6 +69,7 @@ get '/lock/:id' do
 
     unless lock.nil?
         @key_id = create_key(lock['id'])
+        @key_details = key_details(@key_id)
         @open_app_url = app_scheme_url(@key_id)
         erb :key_id
     else 
@@ -94,7 +100,11 @@ __END__
 </ul>
 
 @@ key_id
-<h1>This is key: <%= @key_id %></h1>
+<h1>Here is your key:</h1>
+<% @key_details.each do |k,v| %>
+    <p><%= k %>: <%= v %></p>
+<% end %>
 <form action="<%= @open_app_url %>" target="_blank">
     <input type="submit" value="Use key" />
 </form>
+<p><a href="/">Back to locks</a></p>
