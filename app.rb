@@ -3,15 +3,16 @@
 require 'sinatra'
 require 'httparty'
 
+# Fill in your credentials here:
 $partner = '<partner id>'
 $invitee = '<phone number>'
 $api_key = '<api key>'
 $hmac_secret = '<hmac secret>'
-$app_scheme = 'ai.unloc.pro://'
 
-# Reusables for the api requests
+# Requests and URL setup
 $base_url = "https://api.unloc.app/v1"
 $headers = {'Authorization': "Bearer #{$api_key}"}
+$app_scheme = 'ai.unloc.pro://'
 
 # Creates an url to be used to open the Unloc Pro app.
 # Pass a valid key ID.
