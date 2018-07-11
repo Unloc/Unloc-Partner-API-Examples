@@ -15,18 +15,13 @@ $base_url = "https://api.unloc.app/v1"
 $headers = {'Authorization': "Bearer #{$api_key}"}
 $app_scheme = 'ai.unloc.pro://'
 
-# Generates HMAC from the provided data in hex
-def hmac_hex(data)
-    OpenSSL::HMAC.hexdigest('SHA256', $hmac_secret, data)
-end
-
 # Creates an url to be used to open the Unloc Pro app.
 # Pass a valid key ID.
 def app_scheme_url(key_id)
-    parameters = "id=#{key_id}&r=https://#{request.host}&n=#{$partner_id}"
-    hmac = hmac_hex(parameters)
-
-    "#{$app_scheme}use-key?#{parameters}&s=#{hmac}"
+    return_uri = "https://#{request.host}"
+    params = "id=#{key_id}&r=#{return_uri}&n=#{$partner_id}"
+    s = OpenSSL::HMAC.hexdigest('SHA256', $hmac_secret, params)
+    return "#{$app_scheme}use-key?#{params}&s=#{s}"
 end
 
 # Get the locks available to the configured partner
