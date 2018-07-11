@@ -63,9 +63,9 @@ get '/lock/:id' do
     end
 
     unless lock.nil?
-        @lock_id = create_key(lock['id'])
-        @open_app_url = app_scheme_url(@lock_id)
-        erb :lock_id
+        @key_id = create_key(lock['id'])
+        @open_app_url = app_scheme_url(@key_id)
+        erb :key_id
     else 
         halt 406
     end
@@ -93,8 +93,8 @@ __END__
     <% end %>
 </ul>
 
-@@ lock_id
-<h1>This is key: <%= @lock_id %></h1>
+@@ key_id
+<h1>This is key: <%= @key_id %></h1>
 <form action="<%= @open_app_url %>" target="_blank">
     <input type="submit" value="Use key" />
 </form>
