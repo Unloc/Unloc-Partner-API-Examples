@@ -1,4 +1,4 @@
-# unloc-partner-example
+# Unloc Partner API Example
 
 This is an example implementation for how to use the Unloc API as a _partner_. As a _partner_ you will want ot list the locks you can generate keys for. The example demonstrates how to fetch the locks, generate keys and create signed url's for using the keys with the Unloc Work app.
 
