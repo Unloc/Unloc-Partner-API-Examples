@@ -5,10 +5,10 @@ require 'httparty'
 require "openssl"
 
 # Fill in your credentials here:
-$partner = '<partner id>'
 $invitee = '<phone number>'
 $api_key = '<api key>'
 $hmac_secret = '<hmac secret>'
+$partner_id = '<partner id>'
 
 # Requests and URL setup
 $base_url = "https://api.unloc.app/v1"
@@ -23,7 +23,7 @@ end
 # Creates an url to be used to open the Unloc Pro app.
 # Pass a valid key ID.
 def app_scheme_url(key_id)
-    parameters = "id=#{key_id}&r=https://#{request.host}&n=#{$partner}"
+    parameters = "id=#{key_id}&r=https://#{request.host}&n=#{$partner_id}"
     hmac = hmac_hex(parameters)
 
     "#{$app_scheme}use-key?#{parameters}&s=#{hmac}"
@@ -31,7 +31,7 @@ end
 
 # Get the locks available to the configured partner
 def get_locks
-    HTTParty.get("#{$base_url}/partners/#{$partner}/locks", {headers: $headers}).parsed_response['locks']
+    HTTParty.get("#{$base_url}/partners/#{$partner_id}/locks", {headers: $headers}).parsed_response['locks']
 end
 
 # Creates a key for the lock with the provided 
@@ -43,7 +43,7 @@ def create_key(lock_id)
         'msn': $invitee
     }
     
-    HTTParty.post("#{$base_url}/partners/#{$partner}/keys", {headers: $headers, body: body}).parsed_response['id']
+    HTTParty.post("#{$base_url}/partners/#{$partner_id}/keys", {headers: $headers, body: body}).parsed_response['id']
 end
 
 get '/' do
