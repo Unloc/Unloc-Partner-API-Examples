@@ -34,6 +34,7 @@ def get_locks
     HTTParty.get("#{$base_url}/partners/#{$partner}/locks", {headers: $headers}).parsed_response['locks']
 end
 
+# Creates a key for the lock with the provided 
 def create_key(lock_id)
     body = {
         'lockId': lock_id, 
